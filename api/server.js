@@ -20,7 +20,7 @@ server.post('/games', async (req, res) => {
 
   if (game.title) {
       const ids = await games.insert(game)
-      res.status(201).json(ids);
+      res.status(201).json(ids[0]);
   }
   else {
       res.status(422).json({error: 'missing title'})

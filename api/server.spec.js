@@ -12,6 +12,11 @@ describe("Testing Get data", () => {
     expect(response.body).toEqual([]);
   });
 
+  it('test response server is using json', async () => {
+    const response = await request(server).get('/')
+    expect(response.type).toMatch(/json/i);
+})
+
 
 });
 
@@ -26,6 +31,15 @@ describe("Testing Post", () => {
       });
     expect(response.status).toBe(201);
   });
+
+  it("returns item id if data posts successfully", async () => {
+    const response = await request(server).post("/games").send({
+        title: "GTAV",
+        genre: "Action-adventure",
+        releaseDate: 2016
+    });
+    expect(response.body).toBe(2);
+});
 
   it("return 422 if invalid data", async () => {
     const response = await request(server)
